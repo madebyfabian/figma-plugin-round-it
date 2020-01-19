@@ -22,7 +22,7 @@ npm start
 
 to execute the webpack watcher. If you only want to build it once for production, just type
 ```
-npm build
+npm run build
 ```
 
 to execute webpack once and build all your files.
