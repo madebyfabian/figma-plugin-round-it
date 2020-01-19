@@ -1,1 +1,21 @@
-// The Style for the Plugin's UI
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url('./fonts/Inter-roman.var.woff2?v=3.11') format('woff2');
+}
+
+
+* { 
+  font-family: 'Inter var', system-ui, sans-serif!important;
+}
+
+html {
+  font-size: 11px;
+}
+
+body {
+  margin: 16px;
+}

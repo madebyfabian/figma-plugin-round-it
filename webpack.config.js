@@ -8,8 +8,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // added by me
 const CopyPlugin = require('copy-webpack-plugin');
 
-console.log(process.env.NODE_ENV)
-
 
 module.exports = {
   mode: (process.env.NODE_ENV === 'production') ? 'production' : 'development',
@@ -19,6 +17,7 @@ module.exports = {
     main: './src/main.entry.ts',
     ui: './src/ui.entry.js',
   },
+  stats: 'errors-only',
   output: {
     filename: '[name].js',
     path: path.join(process.cwd(), './dist'),
@@ -50,7 +49,11 @@ module.exports = {
           'sass-loader',
         ]
       },
-    ]
+      {
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'base64-inline-loader'
+      }
+    ],
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.html',],
