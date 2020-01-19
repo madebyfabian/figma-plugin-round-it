@@ -50,8 +50,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'base64-inline-loader'
+        test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+        use: 'base64-inline-loader?limit=100000&name=[name].[ext]'
       }
     ],
   },

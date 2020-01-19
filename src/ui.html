@@ -1,1 +1,38 @@
-Welcome to the "Round it!" Plugin :)
+<div id="view--main" class="is-active">
+  <p>Click on what you want to round:</p>
+
+  <section class="items">
+    <button class="item" id="item--width">
+      <span>Width</span>
+    </button>
+    <button class="item is-done" id="item--height">
+      <span>Height</span>
+    </button>
+    <button class="item" id="item--x-axis">
+      <span>X-axis</span>
+    </button>
+    <button class="item" id="item--y-axis">
+      <span>Y-axis</span>
+    </button>
+  </section>
+
+  <div class="bottom-content">
+    <span>Round to the nearest of</span>
+    <div class="dropdown">
+      <div class="dropdown__value"><!-- Value will be placed by ui.entry.js -->...</div>
+      <div class="dropdown__options">
+        <div class="dropdown__options-group">
+          <div class="dropdown__option" id="dropdown__option--add-option-btn">Add option</div>
+        </div>
+        <div class="dropdown__options-group" id="dropdown__options-group--values">
+          <!-- Values will be placed by ui.entry.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view--options">
+  This is the options overlay.
+  <a href="#main" class="item">&larr; Back</a>
+</div>
