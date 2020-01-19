@@ -1,6 +1,5 @@
 # figma-plugin-round-it
-This is the code for my [Figma](https://figma.com/ "Figma.com Website") Plugin called "Round it!".
-Which you can find [here](https://www.figma.com/c/plugin/777919055291347154 "Figma.com Plugin Site").
+This is the code for my [Figma](https://figma.com/ "Figma.com Website") Plugin called "Round it!". Which you can find [here](https://www.figma.com/c/plugin/777919055291347154 "Figma.com Plugin Site"). This repo is mainly used by myself to just version control the plugin.
 
 
 # License
