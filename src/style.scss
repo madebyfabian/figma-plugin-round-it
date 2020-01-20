@@ -17,10 +17,12 @@
   --figma-color--border: rgba(0, 0, 0, .1);
   --figma-color--primary: #333;
   --figma-color--blue: #18A0FB;
+  --figma-color--red: #F24822;
 }
 
 html, * {
   font-size: 11px;
+  letter-spacing: -.05;
   box-sizing: border-box;
 }
 
@@ -46,6 +48,14 @@ button {
 
 p {
   margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bold;
+  letter-spacing: -.3px;
+  margin: 0;
 }
 
 [id^=view--] {
@@ -100,38 +110,42 @@ p {
 
       &#item--width::before  { background-image: url('./assets/images/Icon--width.svg') }
       &#item--height::before { background-image: url('./assets/images/Icon--height.svg') }
-      &#item--x-axis::before { background-image: url('./assets/images/Icon--x-axis.svg') }
-      &#item--y-axis::before { background-image: url('./assets/images/Icon--y-axis.svg') }
+      &#item--x::before { background-image: url('./assets/images/Icon--x-axis.svg') }
+      &#item--y::before { background-image: url('./assets/images/Icon--y-axis.svg') }
 
-      &.is-done {
+      &.is-disabled, &.is-done {
         pointer-events: none;
 
         span, &::before {
           opacity: .25;
         }
+      }
 
-        &::after {
-          width: 0;
-          left: calc(100% - 16px - 16px);
-          background: url('./assets/images/Icon--tick.svg') left center no-repeat;
-          animation: arrowShow .15s ease;
-          animation-fill-mode: forwards;
-        }
 
-        @keyframes arrowShow {
-          from {width: 0}
-          to {width: 16px}
-        }
+
+      &.is-done::after {
+        width: 0;
+        left: calc(100% - 16px - 16px);
+        background: url('./assets/images/Icon--tick.svg') left center no-repeat;
+        animation: arrowShow .15s ease;
+        animation-fill-mode: forwards;
+      } 
+
+      @keyframes arrowShow {
+        from {width: 0}
+        to {width: 16px}
       }
     }
   }
 
-  .bottom-content {
-    margin: 24px 0;
+  .top-bar {
+    margin: 16px 0;
+    height: 32px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
+
+    
 
     .dropdown {
       margin: 0 0 0 8px;
@@ -168,20 +182,20 @@ p {
       &__options {
         display: none;
         position: absolute;
-        bottom: -4px;
+        top: -5px;
         right: -8px;
         background: #222;
         border-radius: 4px;
         color: #fff;
         padding: 8px 0;
         cursor: default;
+        z-index: 100;
         
         box-shadow: 0px 5px 17px rgba(0, 0, 0, 0.2), 0px 2px 7px rgba(0, 0, 0, 0.15);
 
         &-group {
           display: flex;
           flex-wrap: wrap;
-          flex-direction: column-reverse;
 
           &:not(:last-child) {
             margin-bottom: 8px;
@@ -194,7 +208,7 @@ p {
       &__option {
         white-space: pre;
         height: 24px;
-        padding: 4px 16px 4px 32px;
+        padding: 4px 28px 4px 32px;
         position: relative;
         line-height: 17px;
         width: 100%;
@@ -218,12 +232,113 @@ p {
           }
         }
 
-        &#dropdown__option--add-option-btn::before {
-          background-image: url('./assets/images/Icon--add.svg')
+        &#dropdown__option--edit-values-btn::before {
+          background-image: url('./assets/images/Icon--options.svg')
         }
 
         &:hover {
           background-color: var(--figma-color--blue);
+        }
+      }
+    }
+  }
+}
+
+
+#view--options {
+  .top-bar {
+    position: relative;
+    margin-top: 4px;
+
+    #link-back {
+      color: var(--figma-color--blue);
+      text-decoration: none;
+      position: absolute;
+      left: 0;
+      padding: 8px;
+      margin: -4px 0 0  -8px;
+      display: inline-block;
+      line-height: 16px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  section.values {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: calc(16px - 4px);
+
+    .value, .value-with-input {
+      margin: 4px;
+      line-height: 16px;
+      border-radius: 4px;
+      border: 1px solid var(--figma-color--border);
+    }
+
+    .value {
+      padding: 8px 32px 8px 12px;
+      position: relative;
+      cursor: pointer;
+      transition: border-color .1s ease, color .1s ease;
+
+      &-with-input {
+        padding-right: 8px;
+
+        input {
+          width: 56px;
+          height: 32px;
+          padding: 0 8px;
+          border: none;
+          outline: none;
+          background: transparent;
+        }
+      }
+
+      // If only 1 element left.
+      &:not(.add-btn):last-of-type:first-of-type {
+        pointer-events: none;
+        
+        &::after {
+          opacity: .25;
+        }
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 8px;
+        top: 0;
+        height: 100%;
+        width: 16px;
+        display: block;
+        background: url('./assets/images/Icon--close-sprite.svg') center left no-repeat;
+      }
+
+      &:not(.add-btn):hover {
+        border-color: var(--figma-color--red);
+        color: var(--figma-color--red);
+        
+        &::after {
+          background-position: center right;
+        }
+      }
+
+      &.add-btn {
+        padding: 8px 12px 8px 32px;
+        color: var(--figma-color--blue);
+
+        &::after {
+          left: 8px;
+          background-image: url('./assets/images/Icon--add.svg');
+        }
+
+        &:hover {
+          border-color: var(--figma-color--blue);
         }
       }
     }

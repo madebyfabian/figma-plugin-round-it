@@ -1,38 +1,45 @@
 <div id="view--main" class="is-active">
-  <p>Click on what you want to round:</p>
+  <div class="top-bar">
+    <h1>What do you want to round?</h1>
+    <div class="dropdown">
+      <div class="dropdown__value"><!-- Value will be placed by ui.entry.js -->...</div>
+      <div class="dropdown__options">
+        <div class="dropdown__options-group" id="dropdown__options-group--values">
+          <!-- Values will be placed by ui.entry.js -->
+        </div>
+        <div class="dropdown__options-group">
+          <div class="dropdown__option" id="dropdown__option--edit-values-btn">Settings</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section class="items">
     <button class="item" id="item--width">
       <span>Width</span>
     </button>
-    <button class="item is-done" id="item--height">
+    <button class="item" id="item--height">
       <span>Height</span>
     </button>
-    <button class="item" id="item--x-axis">
+    <button class="item" id="item--x">
       <span>X-axis</span>
     </button>
-    <button class="item" id="item--y-axis">
+    <button class="item" id="item--y">
       <span>Y-axis</span>
     </button>
   </section>
-
-  <div class="bottom-content">
-    <span>Round to the nearest of</span>
-    <div class="dropdown">
-      <div class="dropdown__value"><!-- Value will be placed by ui.entry.js -->...</div>
-      <div class="dropdown__options">
-        <div class="dropdown__options-group">
-          <div class="dropdown__option" id="dropdown__option--add-option-btn">Add option</div>
-        </div>
-        <div class="dropdown__options-group" id="dropdown__options-group--values">
-          <!-- Values will be placed by ui.entry.js -->
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div id="view--options">
-  This is the options overlay.
-  <a href="#main" class="item">&larr; Back</a>
+  <div class="top-bar">
+    <a href="#main" id="link-back">&larr; Back</a>
+    <h1>Your “Round by”-values</h1>
+  </div>
+  <section class="values">
+    <!-- Values will be placed by ui.entry.js -->
+    
+    <div class="value add-btn">
+      Add
+    </div>
+  </section>
 </div>
