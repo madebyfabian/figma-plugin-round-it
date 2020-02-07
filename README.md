@@ -15,7 +15,7 @@ in the root folder to install all dependencies.
 
 
 # Usage
-Just type 
+Just hit 
 ```
 npm start
 ```
