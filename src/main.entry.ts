@@ -1,22 +1,16 @@
-/**
- * The main JS file for all the functionality.
- */
+import { round, roundWidth, roundHeight, roundX, roundY } from './functions/round'
+import generateMsg from './functions/generateMsg'
+
 
 figma.showUI(__html__, { 
 	width: 360, 
-	height: 192
+	height: 248
 });
 
 
-const round = (x, by) => Math.round(x / by) * by
-
-const generateMsg = (propName, oldVal, newVal, nodeName) => {
-	return `Rounded ${propName} (${oldVal}px → ${newVal}px) of "${nodeName}"`
-}
-
 const checkAlreadyRounded = async () => {
 	let alreadyRounded = { width: [], height: [], x: [], y: [] },
-			alreadyRoundedFinalValues = { width: null, height: null, x: null, y: null	}
+			alreadyRoundedFinalValues = { width: null, height: null, x: null, y: null }
 
 	if (figma.currentPage.selection.length) {
 		const roundBy = await figma.clientStorage.getAsync('valueCurrSelected')
@@ -31,7 +25,7 @@ const checkAlreadyRounded = async () => {
 				width: round(node.width, roundBy),
 				height: round(node.height, roundBy),
 				x: round(node.x, roundBy),
-				y: round(node.y, roundBy)
+				y: round(node.y, roundBy),
 			}
 
 			for (const propertyKey of Object.keys(alreadyRoundedThisNode)) {
@@ -48,7 +42,14 @@ const checkAlreadyRounded = async () => {
 			else
 				alreadyRoundedFinalValues[propertyKey] = !alreadyRounded[propertyKey].includes(false)
 		}
+
+		let everythingRounded = Object.values(alreadyRoundedFinalValues).every(value => !!value)
+		alreadyRoundedFinalValues['all'] = everythingRounded
+	} else {
+		alreadyRoundedFinalValues['all'] = null
 	}
+
+	
 
 	figma.ui.postMessage({
 		type: 'alreadyRoundedData',
@@ -59,7 +60,7 @@ const checkAlreadyRounded = async () => {
 
 // On plugin start
 (async () => {
-	// temp
+	// dev for testing:
 	// await figma.clientStorage.setAsync('valuesArr', [ 8, 10 ])
 
 	let values 						= await figma.clientStorage.getAsync('valuesArr'),
@@ -121,43 +122,39 @@ figma.ui.onmessage = async (msg) => {
 				return figma.notify('⚠️ You must select at least one layer.')
 
 			for (const node of figma.currentPage.selection) {
-				let msgArr = [],
-						newHeight: number, 
-						newWidth: number,
-						newY: number,
-						newX: number
+				let msgArr = []
 			
 				switch (type) {
 					case 'height':
-						newHeight = round(node.height, roundBy)
-						if (newHeight !== node.height) {
-							msgArr.push(generateMsg('height', node.height, newHeight, node.name))
-							node.resize(node.width, newHeight)
-						}
+						msgArr.push(roundHeight(node, roundBy))
+						await checkAlreadyRounded()
 						break
 			
 					case 'width':
-						newWidth = round(node.width, roundBy)
-						if (newWidth !== node.width) {
-							msgArr.push(generateMsg('width', node.width, newWidth, node.name))
-							node.resize(newWidth, node.height)
-						}
+						msgArr.push(roundWidth(node, roundBy))
+						await checkAlreadyRounded()
 						break
 			
 					case 'x':
-						newX = round(node.x, roundBy)
-						if (newX !== node.x) {
-							msgArr.push(generateMsg('X-Axis', node.x, newX, node.name))
-							node.x = newX
-						}
+						msgArr.push(roundX(node, roundBy))
+						await checkAlreadyRounded()
 						break
 			
 					case 'y':
-						newY = round(node.y, roundBy)
-						if (newY !== node.y) {
-							msgArr.push(generateMsg('Y-Axis', node.y, newY, node.name))
-							node.y = newY
-						}
+						msgArr.push(roundY(node, roundBy))
+						await checkAlreadyRounded()
+						break
+
+					default:
+						roundHeight(node, roundBy)
+						roundWidth(node, roundBy)
+						roundX(node, roundBy)
+						roundY(node, roundBy)
+
+						msgArr.push(generateMsg('everything', node.name, roundBy))
+
+						await checkAlreadyRounded()
+
 						break
 				}
 			
@@ -173,11 +170,11 @@ figma.ui.onmessage = async (msg) => {
 					valueCurrSelected = await figma.clientStorage.getAsync('valueCurrSelected')
 			
 			// Remove from array
-			console.log('before deletion', values)
+			// console.log('before deletion', values)
 			const key = values.findIndex(i => i === valueToRemove)
 			values.splice(key, 1)
 			await figma.clientStorage.setAsync('valuesArr', values)
-			console.log('after deletion', values)
+			// console.log('after deletion', values)
 
 			// Check if curr selected value was the one which was removed
 			if (valueToRemove === valueCurrSelected) {
