@@ -8,4 +8,4 @@ Just hit me on Twitter (@madebyfabian), via mail (hello@madebyfabian.com) or via
 If you want to, just fork this repo and create a PR if you like to add/improve something!
 
 Tutorial:
-[CONTRIBUTING.md](CONTRIBUTING.MD)
+[CONTRIBUTING.md](CONTRIBUTING.md)
