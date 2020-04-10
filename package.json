@@ -1,11 +1,11 @@
 {
     "name": "figma-plugin-round-it",
     "version": "1.0.0",
-    "description": "The Code for my Figma Plugin \"Round it!\"",
+    "description": "",
     "main": "",
     "scripts": {
-        "start": "webpack-cli --watch",
-        "build": "webpack-cli"
+        "start": "webpack-cli --mode=development --watch",
+        "build": "webpack-cli --mode=production"
     },
     "author": "Fabian Beer",
     "license": "",
@@ -26,7 +26,8 @@
         "ts-loader": "^6.2.2",
         "typescript": "^3.8.3",
         "webpack": "^4.42.1",
-        "webpack-cli": "^3.3.11"
+        "webpack-cli": "^3.3.11",
+        "webpack-messages": "^2.0.4"
     },
     "dependencies": {
         "base64-inline-loader": "^1.1.1"
